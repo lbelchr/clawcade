@@ -1,0 +1,325 @@
+[gd_scene load_steps=43 format=2]
+
+[ext_resource path="res://claw/Claw.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/cage-final.png" type="Texture" id=2]
+[ext_resource path="res://zones/Goal.gd" type="Script" id=3]
+[ext_resource path="res://buttons/Token.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/tamagotchi.png" type="Texture" id=5]
+[ext_resource path="res://cage/Popup.gd" type="Script" id=6]
+[ext_resource path="res://cage/Cage.gd" type="Script" id=7]
+[ext_resource path="res://assets/arrow-left-active.png" type="Texture" id=8]
+[ext_resource path="res://assets/arrow-left.png" type="Texture" id=9]
+[ext_resource path="res://assets/arrow-right-active.png" type="Texture" id=10]
+[ext_resource path="res://assets/arrow-right.png" type="Texture" id=11]
+[ext_resource path="res://assets/arrow-down.png" type="Texture" id=12]
+[ext_resource path="res://assets/arrow-down-active.png" type="Texture" id=13]
+[ext_resource path="res://assets/grab-button-active.png" type="Texture" id=14]
+[ext_resource path="res://assets/grab-button.png" type="Texture" id=15]
+[ext_resource path="res://cage/Crane.gd" type="Script" id=16]
+[ext_resource path="res://assets/prize-screen.png" type="Texture" id=17]
+[ext_resource path="res://assets/game-over.png" type="Texture" id=18]
+[ext_resource path="res://assets/win-screen.png" type="Texture" id=19]
+[ext_resource path="res://assets/gallery.png" type="Texture" id=20]
+[ext_resource path="res://assets/hyrule-shield.png" type="Texture" id=21]
+[ext_resource path="res://assets/kirby.png" type="Texture" id=22]
+[ext_resource path="res://assets/r2d2.png" type="Texture" id=23]
+[ext_resource path="res://assets/mochi.png" type="Texture" id=24]
+[ext_resource path="res://assets/game-boy.png" type="Texture" id=25]
+[ext_resource path="res://assets/totoro.png" type="Texture" id=26]
+[ext_resource path="res://assets/cat.png" type="Texture" id=27]
+[ext_resource path="res://assets/boombox.png" type="Texture" id=28]
+[ext_resource path="res://assets/sushi.png" type="Texture" id=29]
+[ext_resource path="res://prize/Item.tscn" type="PackedScene" id=30]
+[ext_resource path="res://assets/cassette.png" type="Texture" id=31]
+[ext_resource path="res://assets/marvin.png" type="Texture" id=32]
+[ext_resource path="res://cage/Gallery.gd" type="Script" id=33]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 76, 2 )
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 2, 1.5 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 54.5, 4.5 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 2, 1.5 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 8, 1.75 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 9 ), ExtResource( 8 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ ExtResource( 11 ), ExtResource( 10 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ ExtResource( 12 ), ExtResource( 13 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ ExtResource( 15 ), ExtResource( 14 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="Cage" type="Node2D"]
+script = ExtResource( 7 )
+
+[node name="Background" type="TextureRect" parent="."]
+margin_right = 640.0
+margin_bottom = 480.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Claw" parent="." instance=ExtResource( 1 )]
+position = Vector2( 106, 104 )
+game_over_screen = NodePath("../CanvasLayer/GameOver")
+gallery_screen = NodePath("../CanvasLayer/Gallery")
+
+[node name="Crane" type="Line2D" parent="."]
+width = 2.0
+default_color = Color( 0, 0, 0, 1 )
+script = ExtResource( 16 )
+targetPath = NodePath("../Claw")
+
+[node name="Rail" type="Area2D" parent="."]
+position = Vector2( -5, 116 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rail"]
+position = Vector2( 165, -8 )
+shape = SubResource( 1 )
+
+[node name="RightBounds" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightBounds"]
+position = Vector2( 224, 112.5 )
+shape = SubResource( 9 )
+
+[node name="BottomBounds" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomBounds"]
+position = Vector2( 181.5, 169.5 )
+shape = SubResource( 4 )
+
+[node name="Drop" type="Area2D" parent="."]
+position = Vector2( 146, 116 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Drop"]
+position = Vector2( -43, -3.5 )
+shape = SubResource( 2 )
+
+[node name="Goal" type="Area2D" parent="."]
+position = Vector2( 167, 137 )
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal"]
+position = Vector2( -61, 23.75 )
+shape = SubResource( 3 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Showcase" type="Popup" parent="CanvasLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Showcase"]
+margin_left = 64.0
+margin_top = 28.0
+margin_right = 264.0
+margin_bottom = 228.0
+texture = ExtResource( 17 )
+
+[node name="Showcase" type="TextureRect" parent="CanvasLayer/Showcase/TextureRect"]
+margin_left = 68.0
+margin_top = 68.0
+margin_right = 84.0
+margin_bottom = 84.0
+rect_scale = Vector2( 4, 4 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Win" type="Popup" parent="CanvasLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Win"]
+margin_left = 64.0
+margin_top = 28.0
+margin_right = 264.0
+margin_bottom = 228.0
+texture = ExtResource( 19 )
+
+[node name="GameOver" type="Popup" parent="CanvasLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/GameOver"]
+margin_left = 64.0
+margin_top = 28.0
+margin_right = 264.0
+margin_bottom = 228.0
+texture = ExtResource( 18 )
+
+[node name="Gallery" type="Popup" parent="CanvasLayer"]
+pause_mode = 2
+margin_right = 40.0
+margin_bottom = 40.0
+popup_exclusive = true
+script = ExtResource( 33 )
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Gallery"]
+margin_left = 64.0
+margin_top = 28.0
+margin_right = 264.0
+margin_bottom = 228.0
+texture = ExtResource( 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Item" parent="CanvasLayer/Gallery/TextureRect" instance=ExtResource( 30 )]
+texture = ExtResource( 22 )
+prize_name = "kirby"
+
+[node name="Item2" parent="CanvasLayer/Gallery/TextureRect" instance=ExtResource( 30 )]
+margin_left = 92.0
+margin_right = 108.0
+texture = ExtResource( 24 )
+prize_name = "mochi"
+
+[node name="Item3" parent="CanvasLayer/Gallery/TextureRect" instance=ExtResource( 30 )]
+margin_left = 140.0
+margin_right = 156.0
+texture = ExtResource( 25 )
+prize_name = "game-boy"
+
+[node name="Item4" parent="CanvasLayer/Gallery/TextureRect" instance=ExtResource( 30 )]
+margin_top = 88.0
+margin_bottom = 104.0
+texture = ExtResource( 28 )
+prize_name = "boombox"
+
+[node name="Item5" parent="CanvasLayer/Gallery/TextureRect" instance=ExtResource( 30 )]
+margin_left = 92.0
+margin_top = 88.0
+margin_right = 108.0
+margin_bottom = 104.0
+texture = ExtResource( 26 )
+prize_name = "totoro"
+
+[node name="Item6" parent="CanvasLayer/Gallery/TextureRect" instance=ExtResource( 30 )]
+margin_left = 140.0
+margin_top = 88.0
+margin_right = 156.0
+margin_bottom = 104.0
+texture = ExtResource( 29 )
+prize_name = "sushi"
+
+[node name="Item7" parent="CanvasLayer/Gallery/TextureRect" instance=ExtResource( 30 )]
+margin_top = 120.0
+margin_bottom = 136.0
+texture = ExtResource( 21 )
+prize_name = "hyrule-shield"
+
+[node name="Item8" parent="CanvasLayer/Gallery/TextureRect" instance=ExtResource( 30 )]
+margin_left = 92.0
+margin_top = 120.0
+margin_right = 108.0
+margin_bottom = 136.0
+texture = ExtResource( 5 )
+prize_name = "tamagotchi"
+
+[node name="Item9" parent="CanvasLayer/Gallery/TextureRect" instance=ExtResource( 30 )]
+margin_left = 140.0
+margin_top = 120.0
+margin_right = 156.0
+margin_bottom = 136.0
+texture = ExtResource( 23 )
+prize_name = "r2d2"
+
+[node name="Item10" parent="CanvasLayer/Gallery/TextureRect" instance=ExtResource( 30 )]
+margin_top = 152.0
+margin_bottom = 168.0
+texture = ExtResource( 27 )
+prize_name = "cat"
+
+[node name="Item11" parent="CanvasLayer/Gallery/TextureRect" instance=ExtResource( 30 )]
+margin_left = 92.0
+margin_top = 152.0
+margin_right = 108.0
+margin_bottom = 168.0
+texture = ExtResource( 31 )
+prize_name = "cassette"
+
+[node name="Item12" parent="CanvasLayer/Gallery/TextureRect" instance=ExtResource( 30 )]
+margin_left = 140.0
+margin_top = 152.0
+margin_right = 156.0
+margin_bottom = 168.0
+texture = ExtResource( 32 )
+prize_name = "marvin"
+
+[node name="Buttons" type="Node2D" parent="."]
+
+[node name="Token1" parent="Buttons" instance=ExtResource( 4 )]
+position = Vector2( 147, 189 )
+
+[node name="Token2" parent="Buttons" instance=ExtResource( 4 )]
+position = Vector2( 156, 189 )
+
+[node name="Token3" parent="Buttons" instance=ExtResource( 4 )]
+position = Vector2( 165, 189 )
+
+[node name="LeftArrow" type="AnimatedSprite" parent="Buttons"]
+position = Vector2( 192, 190 )
+frames = SubResource( 5 )
+
+[node name="RightArrow" type="AnimatedSprite" parent="Buttons"]
+position = Vector2( 225, 190 )
+frames = SubResource( 6 )
+
+[node name="DownArrow" type="AnimatedSprite" parent="Buttons"]
+position = Vector2( 208, 195 )
+frames = SubResource( 7 )
+
+[node name="GrabButton" type="AnimatedSprite" parent="Buttons"]
+position = Vector2( 208, 186 )
+frames = SubResource( 8 )
+
+[connection signal="area_entered" from="Rail" to="Claw" method="_on_Rail_area_entered"]
+[connection signal="area_entered" from="RightBounds" to="Claw" method="_on_RightBounds_area_entered"]
+[connection signal="area_entered" from="BottomBounds" to="Claw" method="_on_Bottom_area_entered"]
+[connection signal="area_entered" from="Drop" to="Claw" method="_on_Drop_area_entered"]
+[connection signal="area_entered" from="Goal" to="Goal" method="_on_Goal_area_entered"]
+[connection signal="showcase" from="Goal" to="CanvasLayer/Showcase" method="_on_Goal_showcase"]
+[connection signal="popup_hide" from="CanvasLayer/Showcase" to="." method="_on_Showcase_popup_hide"]
+[connection signal="popup_hide" from="CanvasLayer/Win" to="." method="_on_Win_popup_hide"]
+[connection signal="popup_hide" from="CanvasLayer/GameOver" to="." method="_on_GameOver_popup_hide"]
+[connection signal="popup_hide" from="CanvasLayer/Gallery" to="CanvasLayer/Gallery" method="_on_Gallery_popup_hide"]
